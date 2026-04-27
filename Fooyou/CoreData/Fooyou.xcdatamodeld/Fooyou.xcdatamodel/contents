@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22222" systemVersion="23A344" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CDProduct" representedClassName="CDProduct" syncable="YES" codeGenerationType="class">
+        <attribute name="barcode" optional="YES" attributeType="String"/>
+        <attribute name="brand" attributeType="String" defaultValueString=""/>
+        <attribute name="caloriesPer100" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="carbsPer100" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="defaultPortionSize" attributeType="Double" defaultValueString="100.0" usesScalarValueType="YES"/>
+        <attribute name="fatPer100" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imageURLString" optional="YES" attributeType="String"/>
+        <attribute name="ingredientCategories" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="lastUsed" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lowStockThreshold" attributeType="Double" defaultValueString="100.0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="packSizeGrams" attributeType="Double" defaultValueString="100.0" usesScalarValueType="YES"/>
+        <attribute name="proteinPer100" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="unit" attributeType="String" defaultValueString="gram"/>
+        <attribute name="usageCount" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="CDPantryItem" representedClassName="CDPantryItem" syncable="YES" codeGenerationType="class">
+        <attribute name="expiryDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="location" attributeType="String" defaultValueString="Kast"/>
+        <attribute name="purchasedDate" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="quantity" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="product" maxCount="1" deletionRule="Nullify" destinationEntity="CDProduct"/>
+    </entity>
+    <entity name="CDPlannedMeal" representedClassName="CDPlannedMeal" syncable="YES" codeGenerationType="class">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dishName" attributeType="String" defaultValueString=""/>
+        <attribute name="eatenAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isEaten" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="photo" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="servings" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="servingsToEat" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="slot" attributeType="String" defaultValueString="Avondeten"/>
+        <attribute name="sourceRecipeURLString" optional="YES" attributeType="String"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDPlannedIngredient" inverseName="meal" inverseEntity="CDPlannedIngredient"/>
+    </entity>
+    <entity name="CDPlannedIngredient" representedClassName="CDPlannedIngredient" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="calories" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="category" attributeType="String" defaultValueString=""/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="ingredientName" attributeType="String" defaultValueString=""/>
+        <attribute name="unit" attributeType="String" defaultValueString="gram"/>
+        <relationship name="meal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPlannedMeal" inverseName="ingredients" inverseEntity="CDPlannedMeal"/>
+        <relationship name="product" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDProduct"/>
+    </entity>
+    <entity name="CDMealLog" representedClassName="CDMealLog" syncable="YES" codeGenerationType="class">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dishName" attributeType="String" defaultValueString=""/>
+        <attribute name="healthKitCorrelationUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="photo" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES"/>
+        <attribute name="slot" attributeType="String" defaultValueString="Avondeten"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CDConsumedIngredient" inverseName="log" inverseEntity="CDConsumedIngredient"/>
+    </entity>
+    <entity name="CDConsumedIngredient" representedClassName="CDConsumedIngredient" syncable="YES" codeGenerationType="class">
+        <attribute name="amountGrams" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="log" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDMealLog" inverseName="ingredients" inverseEntity="CDMealLog"/>
+        <relationship name="product" maxCount="1" deletionRule="Nullify" destinationEntity="CDProduct"/>
+    </entity>
+</model>
