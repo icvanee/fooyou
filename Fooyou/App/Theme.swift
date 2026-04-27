@@ -10,9 +10,7 @@ enum Theme {
     static let eaten         = Color(hex: "52B788")
     static let warning       = Color(hex: "E76F51")
 
-    static let cardShadow = AnyShapeStyle(
-        Color.black.opacity(0.08)
-    )
+    static let cardShadow = Color.black.opacity(0.08)
 }
 
 extension Font {

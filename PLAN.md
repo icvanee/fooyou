@@ -1,4 +1,4 @@
-# 🥗 Keukenmaat — Project Plan
+# 🥗 Fooyou — Project Plan
 
 > *Je keukenvriend die bijhoudt wat je eet en wat je in huis hebt*  
 > Persoonlijke voorraad- en calorie tracker voor iOS  
@@ -6,9 +6,9 @@
 
 -----
 
-## 💡 De naam: Keukenmaat
+## 💡 De naam: Fooyou
 
-**Keukenmaat** speelt op twee betekenissen van het Nederlandse woord *maat*:
+**Fooyou** speelt op twee betekenissen van het Nederlandse woord *maat*:
 
 - **Maat = vriend/buddy** — je vertrouwde keukenvriend
 - **Maat = portie/hoeveelheid** — houdt je maatjes bij
@@ -19,7 +19,7 @@ Herkenbaar, volledig Nederlands, warm van toon. Past bij de doelgroep.
 
 ## 🎯 Visie
 
-Een iOS app die het bijhouden van je voorraden en calorieën zo eenvoudig maakt dat het voor iedereen werkt — van de developer die hem bouwt tot de partner die hem dagelijks gebruikt. Geen gedoe met handmatig invoeren. Foto van je bon, foto van je maaltijd, of recept delen vanuit de AH app — de rest doet Keukenmaat.
+Een iOS app die het bijhouden van je voorraden en calorieën zo eenvoudig maakt dat het voor iedereen werkt — van de developer die hem bouwt tot de partner die hem dagelijks gebruikt. Geen gedoe met handmatig invoeren. Foto van je bon, foto van je maaltijd, of recept delen vanuit de AH app — de rest doet Fooyou.
 
 Alle voedingsdata wordt weggeschreven naar **Apple HealthKit**, zodat **Coach Leo** de voedingsgegevens kan inlezen voor de AI trainingscoach.
 
@@ -100,9 +100,9 @@ Waarschuwing: #E76F51  (rood-oranje — verlopen/bijna op)
 ### Mappenstructuur
 
 ```
-Keukenmaat/
+Fooyou/
 ├── App/
-│   ├── KeukenmaatApp.swift
+│   ├── FooyouApp.swift
 │   └── AppState.swift
 ├── Features/
 │   ├── Pantry/
@@ -140,11 +140,11 @@ Keukenmaat/
 │   ├── MealLog.swift
 │   └── ClaudeResponse.swift
 ├── CoreData/
-│   └── Keukenmaat.xcdatamodeld
+│   └── Fooyou.xcdatamodeld
 ├── Resources/
 │   ├── Assets.xcassets
 │   └── Localizable.strings
-└── KeukenmaatShareExtension/             # Aparte Xcode target
+└── FooyouShareExtension/             # Aparte Xcode target
     ├── ShareViewController.swift
     ├── RecipeParserService.swift
     └── Info.plist
@@ -365,16 +365,16 @@ Tap [Bevestig]
 
 ### Doel
 
-Keukenmaat schrijft **alleen** naar HealthKit als een maaltijd als “gegeten” is gemarkeerd.  
+Fooyou schrijft **alleen** naar HealthKit als een maaltijd als “gegeten” is gemarkeerd.  
 Coach Leo leest de voedingsdata terug om trainingsplannen af te stemmen op inname.
 
 ### Benodigde permissies (Info.plist)
 
 ```
 NSHealthShareUsageDescription:
-  "Keukenmaat leest voedingsdata om je dagelijkse inname te tonen."
+  "Fooyou leest voedingsdata om je dagelijkse inname te tonen."
 NSHealthUpdateUsageDescription:
-  "Keukenmaat schrijft je maaltijden weg zodat Coach Leo ze kan gebruiken
+  "Fooyou schrijft je maaltijden weg zodat Coach Leo ze kan gebruiken
    voor je trainingsplanning."
 ```
 
@@ -431,12 +431,12 @@ class HealthKitService {
     private func mealMetadata(for log: MealLog) -> [String: Any] {
         [
             HKMetadataKeyFoodType:       log.dishName,
-            "KeukenmaatMealSlot":         log.slot.rawValue,
+            "FooyouMealSlot":         log.slot.rawValue,
             // ↑ "Avondeten" — Coach Leo leest dit om trainingsplanning
             //   te combineren met voedingstiming
-            "KeukenmaatMealSlotKey":      log.slot.healthKitMetadataLabel,
-            "KeukenmaatTotalCalories":    log.totalCalories,
-            "KeukenmaatSourceApp":        "Keukenmaat",
+            "FooyouMealSlotKey":      log.slot.healthKitMetadataLabel,
+            "FooyouTotalCalories":    log.totalCalories,
+            "FooyouSourceApp":        "Fooyou",
         ]
     }
 }
@@ -448,8 +448,8 @@ class HealthKitService {
 // In Coach Leo — voedingsdata opvragen voor de afgelopen week:
 HKSampleQuery(sampleType: HKCorrelationType(.food), ...) { samples in
     samples.compactMap { $0 as? HKCorrelation }.forEach { meal in
-        let slot     = meal.metadata?["KeukenmaatMealSlot"] as? String  // "Avondeten"
-        let calories = meal.metadata?["KeukenmaatTotalCalories"] as? Double
+        let slot     = meal.metadata?["FooyouMealSlot"] as? String  // "Avondeten"
+        let calories = meal.metadata?["FooyouTotalCalories"] as? Double
         let time     = meal.startDate
         // Coach Leo kan nu:
         // - Zware trainingsdag + weinig gegeten → hersteladvies aanpassen
@@ -484,7 +484,7 @@ De Share Extension vangt **drie content types** op, elk met een eigen flow:
 Veel receptenwebsites en kookboekplatforms (Allerhande, Leukerecepten, Culy, etc.) bieden recepten aan als downloadbare PDF. Deze werken identiek aan de AH bon flow:
 
 ```
-Safari / Files app → PDF recept → Deel → Keukenmaat
+Safari / Files app → PDF recept → Deel → Fooyou
     ↓
 ShareViewController detecteert: is dit een bon of een recept?
     ↓
@@ -510,7 +510,7 @@ Return ONLY: { "type": "receipt" | "recipe" | "unknown" }
 ### Flow — AH Kassabon PDF
 
 ```
-AH app → Bestellingen → Bon → Deel → Keukenmaat
+AH app → Bestellingen → Bon → Deel → Fooyou
     ↓
 ShareViewController ontvangt PDF
     ↓
@@ -531,7 +531,7 @@ Bevestigingssheet:
 ### Flow — AH Recept (tekst of URL)
 
 ```
-AH app → Recept → Deel → Keukenmaat
+AH app → Recept → Deel → Fooyou
     ↓
 ShareViewController ontvangt tekst of URL
     ↓
@@ -544,10 +544,10 @@ Sheet: datum + maaltijdslot kiezen → opslaan als gepland
 
 ```
 Targets:
-  ├── Keukenmaat               (main app)
-  └── KeukenmaatShareExtension (share extension)
+  ├── Fooyou               (main app)
+  └── FooyouShareExtension (share extension)
       Entitlement: com.apple.security.application-groups
-      App Group:   group.nl.jouwdomain.keukenmaat
+      App Group:   group.nl.jouwdomain.fooyou
       ↑ Beide targets gebruiken dezelfde CoreData store via deze group
 ```
 
@@ -943,7 +943,7 @@ Secrets.xcconfig
 DerivedData/
 .DS_Store
 *.xcuserstate
-Keukenmaat.xcodeproj/xcuserdata/
+Fooyou.xcodeproj/xcuserdata/
 ```
 
 -----
@@ -967,11 +967,11 @@ Keukenmaat.xcodeproj/xcuserdata/
 - **Weekoverzicht** — calorie trends + macro gemiddelden als grafiek
 - **Recepten opslaan** — eigen gerechten bewaren voor snelle herlog
 - **Widget** — dag calorieën + volgende geplande maaltijd op homescreen
-- **Coach Leo deep link** — tap op voedingsdata in Coach Leo → open Keukenmaat dag detail
+- **Coach Leo deep link** — tap op voedingsdata in Coach Leo → open Fooyou dag detail
 - **Gezamenlijk loggen** — Roos en Iwan loggen apart, CloudKit sync houdt voorraad bij
 
 -----
 
 *Laatste update: april 2026*  
-*Project: Keukenmaat iOS*  
+*Project: Fooyou iOS*  
 *Stack: SwiftUI · CoreData · CloudKit · Claude Haiku 4.5 · Open Food Facts · HealthKit*

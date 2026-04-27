@@ -1,4 +1,5 @@
 Secrets.xcconfig
+.claude/
 DerivedData/
 .DS_Store
 *.xcuserstate

@@ -9,7 +9,7 @@
         <attribute name="fatPer100" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="imageURLString" optional="YES" attributeType="String"/>
-        <attribute name="ingredientCategories" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[String]"/>
+        <attribute name="ingredientCategories" optional="YES" attributeType="String"/>
         <attribute name="lastUsed" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lowStockThreshold" attributeType="Double" defaultValueString="100.0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>

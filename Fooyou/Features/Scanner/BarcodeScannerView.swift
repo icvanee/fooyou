@@ -131,8 +131,11 @@ final class BarcodeScannerCoordinator: NSObject, ObservableObject, AVCaptureMeta
     // MARK: - Private
 
     private func configureSession() async {
-        guard AVCaptureDevice.authorizationStatus(for: .video) == .authorized ||
-              (await AVCaptureDevice.requestAccess(for: .video)) else { return }
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        if status != .authorized {
+            let granted = await AVCaptureDevice.requestAccess(for: .video)
+            guard granted else { return }
+        }
 
         session.beginConfiguration()
         defer { session.commitConfiguration() }

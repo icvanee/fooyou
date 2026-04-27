@@ -120,7 +120,8 @@ extension Product {
         self.carbsPer100 = cd.carbsPer100
         self.packSizeGrams = cd.packSizeGrams
         self.unit = FoodUnit(rawValue: cd.unit ?? "gram") ?? .gram
-        self.ingredientCategories = (cd.ingredientCategories as? [String]) ?? []
+        self.ingredientCategories = cd.ingredientCategories
+            .flatMap { try? JSONDecoder().decode([String].self, from: Data($0.utf8)) } ?? []
         self.usageCount = Int(cd.usageCount)
         self.lastUsed = cd.lastUsed
         self.lowStockThreshold = cd.lowStockThreshold
@@ -141,7 +142,8 @@ extension CDProduct {
         carbsPer100 = product.carbsPer100
         packSizeGrams = product.packSizeGrams
         unit = product.unit.rawValue
-        ingredientCategories = product.ingredientCategories as NSObject
+        ingredientCategories = (try? JSONEncoder().encode(product.ingredientCategories))
+            .flatMap { String(data: $0, encoding: .utf8) }
         usageCount = Int32(product.usageCount)
         lastUsed = product.lastUsed
         lowStockThreshold = product.lowStockThreshold

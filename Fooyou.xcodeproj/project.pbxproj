@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -39,10 +39,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		83CBBA001A601CBA00E9B192 /* Fooyou.xcdatamodeld */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fooyou.xcdatamodeld; sourceTree = "<group>"; };
+		83CBBA011A601CBA00E9B192 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		83CBBA021A601CBA00E9B192 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		83CBBA031A601CBA00E9B192 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83CBBA041A601CBA00E9B192 /* Fooyou.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Fooyou.entitlements; sourceTree = "<group>"; };
+		83CBBA521A601CCB00E9B192 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		83CBBAA91A601CBA00E9B192 /* Fooyou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fooyou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83CBBAB71A601CBA00E9B192 /* FooyouApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooyouApp.swift; sourceTree = "<group>"; };
 		83CBBAB81A601CBA00E9B192 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
-		83CBBA521A601CCB00E9B192 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		83CBBAB91A601CBA00E9B192 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		83CBBABA1A601CBA00E9B192 /* Product.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Product.swift; sourceTree = "<group>"; };
 		83CBBABB1A601CBA00E9B192 /* PantryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryItem.swift; sourceTree = "<group>"; };
@@ -66,11 +71,6 @@
 		83CBBACD1A601CBA00E9B192 /* ClaudeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeService.swift; sourceTree = "<group>"; };
 		83CBBACE1A601CBA00E9B192 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
 		83CBBACF1A601CBA00E9B192 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		83CBBA001A601CBA00E9B192 /* Fooyou.xcdatamodeld */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fooyou.xcdatamodeld; sourceTree = "<group>"; };
-		83CBBA011A601CBA00E9B192 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		83CBBA021A601CBA00E9B192 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		83CBBA031A601CBA00E9B192 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		83CBBA041A601CBA00E9B192 /* Fooyou.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Fooyou.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +98,14 @@
 				83CBBA041A601CBA00E9B192 /* Fooyou.entitlements */,
 			);
 			path = Fooyou;
+			sourceTree = "<group>";
+		};
+		83CBB9F71A601CBA00E9B192 = {
+			isa = PBXGroup;
+			children = (
+				83CBB9F61A601CBA00E9B192 /* Fooyou */,
+				83CBB9F81A601CBA00E9B192 /* Products */,
+			);
 			sourceTree = "<group>";
 		};
 		83CBB9F81A601CBA00E9B192 /* Products */ = {
@@ -208,14 +216,6 @@
 				83CBBA021A601CBA00E9B192 /* Localizable.strings */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		83CBB9F71A601CBA00E9B192 = {
-			isa = PBXGroup;
-			children = (
-				83CBB9F61A601CBA00E9B192 /* Fooyou */,
-				83CBB9F81A601CBA00E9B192 /* Products */,
-			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -446,10 +446,10 @@
 				CODE_SIGN_ENTITLEMENTS = Fooyou/Fooyou.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Y4L26W27HC;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Fooyou/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -471,10 +471,10 @@
 				CODE_SIGN_ENTITLEMENTS = Fooyou/Fooyou.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = Y4L26W27HC;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Fooyou/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -510,7 +510,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
 	};
 	rootObject = 83CBB9F71A601CBA00E9B193 /* Project object */;
 }

@@ -35,11 +35,21 @@ final class PersistenceController {
         description.setOption(true as NSNumber,
                               forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
 
+        var loadError: Error?
         container.loadPersistentStores { _, error in
-            if let error {
-                fatalError("CoreData failed to load: \(error.localizedDescription)")
+            loadError = error
+        }
+
+        if loadError != nil {
+            // CloudKit container not yet provisioned — fall back to local store
+            description.cloudKitContainerOptions = nil
+            container.loadPersistentStores { _, error in
+                if let error {
+                    fatalError("CoreData failed to load (local fallback): \(error.localizedDescription)")
+                }
             }
         }
+
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
     }

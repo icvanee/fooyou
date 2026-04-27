@@ -55,7 +55,7 @@ struct PantryView: View {
                 .background(vm.selectedLocation == loc ? Theme.primary : Theme.surface)
                 .foregroundStyle(vm.selectedLocation == loc ? .white : Theme.textPrimary)
                 .clipShape(Capsule())
-                .shadow(color: Theme.cardShadow as! Color, radius: 4, y: 2)
+                .shadow(color: Theme.cardShadow, radius: 4, y: 2)
             }
             Spacer()
         }
