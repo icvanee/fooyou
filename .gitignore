@@ -1,0 +1,13 @@
+Secrets.xcconfig
+DerivedData/
+.DS_Store
+*.xcuserstate
+Fooyou.xcodeproj/xcuserdata/
+Fooyou.xcodeproj/project.xcworkspace/xcuserdata/
+*.xccheckout
+*.moved-aside
+build/
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM

@@ -1,0 +1,30 @@
+/* Tab bar */
+"tab.pantry"    = "Voorraad";
+"tab.day"       = "Dag";
+"tab.scanner"   = "Scannen";
+"tab.settings"  = "Instellingen";
+
+/* Meal slots */
+"slot.breakfast"       = "Ontbijt";
+"slot.morning_snack"   = "Snack ochtend";
+"slot.lunch"           = "Lunch";
+"slot.afternoon_snack" = "Snack middag";
+"slot.dinner"          = "Avondeten";
+"slot.evening_snack"   = "Snack avond";
+
+/* Storage locations */
+"location.fridge"   = "Koelkast";
+"location.freezer"  = "Vriezer";
+"location.pantry"   = "Kast";
+
+/* Actions */
+"action.add"            = "Toevoegen";
+"action.cancel"         = "Annuleer";
+"action.confirm"        = "Bevestig";
+"action.mark_eaten"     = "Markeer als gegeten";
+"action.plan_meal"      = "Maaltijd plannen";
+"action.scan_barcode"   = "Barcode";
+
+/* Errors */
+"error.product_not_found" = "Product niet gevonden.";
+"error.camera_permission" = "Geen toegang tot camera. Wijzig dit in Instellingen.";
