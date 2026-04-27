@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keukenmaat — App Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Nunito+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --groen:      #2D6A4F;
+    --groen-licht:#52B788;
+    --oranje:     #F4A261;
+    --bg:         #FAFAF7;
+    --surface:    #FFFFFF;
+    --tekst:      #1A1A2E;
+    --tekst-zacht:#6B7280;
+    --gepland:    #A8DADC;
+    --gegeten:    #52B788;
+    --warning:    #E76F51;
+    --border:     #E8E8E3;
+
+    --ontbijt:      #FFD166;
+    --ontbijt-bg:   #FFF8E1;
+    --snack-och:    #FFE8A3;
+    --snack-och-bg: #FFFBF0;
+    --lunch:        #52B788;
+    --lunch-bg:     #EBF7F1;
+    --snack-mid:    #A8E6CF;
+    --snack-mid-bg: #F0FAF5;
+    --avond:        #457B9D;
+    --avond-bg:     #EAF2F8;
+    --snack-av:     #A8DADC;
+    --snack-av-bg:  #EEF8F9;
+  }
+
+  body {
+    background: #1A1A2E;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px 60px;
+    font-family: 'Nunito Sans', sans-serif;
+  }
+
+  /* Page header */
+  .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .page-header h1 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    color: #FAFAF7;
+    letter-spacing: -0.5px;
+  }
+  .page-header h1 span { color: var(--oranje); }
+  .page-header p {
+    color: #9CA3AF;
+    font-size: 0.95rem;
+    margin-top: 6px;
+  }
+
+  /* Screens container */
+  .screens {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1300px;
+  }
+
+  .screen-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .screen-label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #6B7280;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* iPhone frame */
+  .phone {
+    width: 320px;
+    background: #111;
+    border-radius: 44px;
+    padding: 12px;
+    box-shadow:
+      0 0 0 1px #333,
+      0 30px 80px rgba(0,0,0,0.6),
+      inset 0 0 0 1px #444;
+    position: relative;
+  }
+  .phone-notch {
+    width: 90px;
+    height: 24px;
+    background: #111;
+    border-radius: 0 0 16px 16px;
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+  .phone-screen {
+    background: var(--bg);
+    border-radius: 34px;
+    overflow: hidden;
+    height: 636px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Status bar */
+  .status-bar {
+    background: var(--bg);
+    padding: 14px 20px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .status-time {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: var(--tekst);
+  }
+  .status-icons {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    font-size: 0.7rem;
+    color: var(--tekst);
+  }
+
+  /* Scrollable content */
+  .screen-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: none;
+    padding-bottom: 70px;
+  }
+  .screen-content::-webkit-scrollbar { display: none; }
+
+  /* Tab bar */
+  .tab-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    background: rgba(250,250,247,0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    padding: 8px 0 16px;
+    border-radius: 0 0 34px 34px;
+  }
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    cursor: pointer;
+  }
+  .tab-icon { font-size: 1.35rem; }
+  .tab-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: var(--tekst-zacht);
+  }
+  .tab-item.active .tab-label { color: var(--groen); }
+  .tab-item.active .tab-icon { filter: none; }
+
+  /* ─── SCREEN 1: DAG VIEW ─── */
+  .dag-header {
+    padding: 12px 18px 10px;
+    background: var(--bg);
+  }
+  .dag-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .dag-titel {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.35rem;
+    color: var(--tekst);
+  }
+  .dag-datum {
+    font-size: 0.75rem;
+    color: var(--tekst-zacht);
+    font-weight: 600;
+    margin-top: 1px;
+  }
+  .dag-nav {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .dag-nav-btn {
+    width: 28px; height: 28px;
+    background: var(--surface);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    cursor: pointer;
+    color: var(--tekst);
+  }
+
+  /* Calorie ring summary */
+  .calorie-card {
+    background: var(--groen);
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin: 0 18px 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 16px rgba(45,106,79,0.25);
+  }
+  .calorie-ring {
+    position: relative;
+    width: 58px; height: 58px;
+    flex-shrink: 0;
+  }
+  .calorie-ring svg { transform: rotate(-90deg); }
+  .calorie-ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .calorie-ring-num {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: #fff;
+    line-height: 1;
+  }
+  .calorie-ring-pct {
+    font-size: 0.5rem;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+  }
+  .calorie-info { flex: 1; }
+  .calorie-main {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+  .calorie-main span { opacity: 0.7; font-size: 0.75rem; font-weight: 600; }
+  .macros-row {
+    display: flex;
+    gap: 10px;
+  }
+  .macro-chip {
+    background: rgba(255,255,255,0.15);
+    border-radius: 6px;
+    padding: 3px 7px;
+    font-size: 0.62rem;
+    color: #fff;
+    font-weight: 700;
+  }
+  .macro-chip span { opacity: 0.75; font-weight: 500; }
+
+  /* Meal slot cards */
+  .slot-section { padding: 0 18px 8px; }
+  .slot-card {
+    border-radius: 14px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .slot-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px 8px;
+    gap: 8px;
+  }
+  .slot-emoji { font-size: 1rem; }
+  .slot-name {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.78rem;
+    color: var(--tekst);
+    flex: 1;
+  }
+  .slot-kcal {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    color: var(--tekst-zacht);
+  }
+
+  /* Gegeten item */
+  .slot-item-gegeten {
+    background: var(--surface);
+    border: 1.5px solid var(--gegeten);
+    border-radius: 14px;
+  }
+  .slot-item-gegeten .slot-header { background: var(--surface); }
+  .slot-item-body-gegeten {
+    padding: 0 14px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .check-badge {
+    width: 20px; height: 20px;
+    background: var(--gegeten);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .gegeten-dish {
+    font-size: 0.78rem;
+    color: var(--tekst);
+    font-weight: 600;
+    flex: 1;
+  }
+  .gegeten-time {
+    font-size: 0.65rem;
+    color: var(--tekst-zacht);
+  }
+
+  /* Gepland item */
+  .slot-item-gepland {
+    background: var(--avond-bg);
+    border: 1.5px dashed var(--avond);
+    border-radius: 14px;
+  }
+  .slot-item-gepland .slot-header { background: transparent; }
+  .slot-item-body-gepland {
+    padding: 0 14px 12px;
+  }
+  .gepland-dish {
+    font-size: 0.82rem;
+    color: var(--tekst);
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .gepland-sub {
+    font-size: 0.65rem;
+    color: var(--tekst-zacht);
+    margin-bottom: 10px;
+  }
+  .btn-gegeten {
+    background: var(--groen);
+    color: #fff;
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(45,106,79,0.3);
+  }
+
+  /* Leeg slot */
+  .slot-item-leeg {
+    background: var(--surface);
+    border: 1.5px dashed var(--border);
+    border-radius: 14px;
+  }
+  .slot-item-leeg .slot-header { background: transparent; }
+  .slot-add {
+    padding: 0 14px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--tekst-zacht);
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .slot-add-icon {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1.5px dashed var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    color: var(--tekst-zacht);
+  }
+
+  /* ─── SCREEN 2: VOORRAAD ─── */
+  .voorraad-header {
+    padding: 12px 18px 6px;
+  }
+  .voorraad-titel {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.35rem;
+    color: var(--tekst);
+    margin-bottom: 10px;
+  }
+  .segment-bar {
+    display: flex;
+    background: #EDEDE8;
+    border-radius: 10px;
+    padding: 3px;
+    gap: 2px;
+    margin-bottom: 12px;
+  }
+  .segment-btn {
+    flex: 1;
+    text-align: center;
+    padding: 6px 4px;
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: var(--tekst-zacht);
+    cursor: pointer;
+  }
+  .segment-btn.active {
+    background: var(--surface);
+    color: var(--tekst);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+
+  /* Alert banner */
+  .alert-banner {
+    margin: 0 18px 10px;
+    background: #FEF0ED;
+    border: 1px solid #FACDC6;
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .alert-icon { font-size: 1rem; }
+  .alert-text {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--warning);
+  }
+
+  /* Voorraad sectie */
+  .voorraad-sectie {
+    padding: 0 18px;
+  }
+  .sectie-label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.68rem;
+    color: var(--tekst-zacht);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    padding-left: 2px;
+  }
+  .voorraad-card {
+    background: var(--surface);
+    border-radius: 14px;
+    margin-bottom: 8px;
+    padding: 12px 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-left: 4px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .voorraad-card.ok    { border-left-color: var(--gegeten); }
+  .voorraad-card.warn  { border-left-color: var(--oranje); }
+  .voorraad-card.crit  { border-left-color: var(--warning); }
+  .product-emoji { font-size: 1.5rem; flex-shrink: 0; }
+  .product-info { flex: 1; min-width: 0; }
+  .product-name {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.82rem;
+    color: var(--tekst);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .product-meta {
+    font-size: 0.65rem;
+    color: var(--tekst-zacht);
+    margin-top: 1px;
+    font-weight: 600;
+  }
+  .product-bar-wrap {
+    margin-top: 6px;
+    background: #F0F0EB;
+    border-radius: 4px;
+    height: 5px;
+    overflow: hidden;
+  }
+  .product-bar { height: 100%; border-radius: 4px; }
+  .product-bar.ok   { background: var(--gegeten); }
+  .product-bar.warn { background: var(--oranje); }
+  .product-bar.crit { background: var(--warning); }
+  .tht-badge {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.6rem;
+    font-weight: 800;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .tht-ok   { background: #EBF7F1; color: var(--groen); }
+  .tht-warn { background: #FEF3E2; color: #B45309; }
+  .tht-crit { background: #FEF0ED; color: var(--warning); }
+
+  /* ─── SCREEN 3: SCANNEN ─── */
+  .scannen-header {
+    padding: 12px 18px 16px;
+  }
+  .scannen-titel {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 900;
+    font-size: 1.35rem;
+    color: var(--tekst);
+    margin-bottom: 4px;
+  }
+  .scannen-sub {
+    font-size: 0.72rem;
+    color: var(--tekst-zacht);
+    font-weight: 600;
+  }
+  .scan-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 0 18px;
+    margin-bottom: 20px;
+  }
+  .scan-card {
+    border-radius: 18px;
+    padding: 20px 14px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+  }
+  .scan-card-primary {
+    background: var(--groen);
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+    padding: 18px 20px;
+  }
+  .scan-icon-big { font-size: 2.2rem; }
+  .scan-icon-big-primary { font-size: 2.5rem; margin-right: 4px; }
+  .scan-card-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.88rem;
+    color: var(--tekst);
+  }
+  .scan-card-primary .scan-card-title { color: #fff; font-size: 1rem; }
+  .scan-card-desc {
+    font-size: 0.65rem;
+    color: var(--tekst-zacht);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .scan-card-primary .scan-card-desc { color: rgba(255,255,255,0.75); }
+  .scan-card-primary .scan-text { flex: 1; }
+  .scan-card-bon    { background: #FFF8E1; }
+  .scan-card-meal   { background: #EBF7F1; }
+  .scan-card-barcode{ background: #EAF2F8; }
+  .scan-card-manual { background: #F5F0FF; }
+
+  .recent-header {
+    padding: 0 18px 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: var(--tekst-zacht);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .recent-item {
+    margin: 0 18px 7px;
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  }
+  .recent-icon {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .recent-icon.pdf  { background: #FEF0ED; }
+  .recent-icon.foto { background: #EBF7F1; }
+  .recent-info { flex: 1; }
+  .recent-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--tekst);
+  }
+  .recent-sub {
+    font-size: 0.62rem;
+    color: var(--tekst-zacht);
+    margin-top: 1px;
+  }
+  .recent-time {
+    font-size: 0.62rem;
+    color: var(--tekst-zacht);
+  }
+
+  /* Color legend */
+  .legend {
+    max-width: 1050px;
+    margin-top: 48px;
+    width: 100%;
+  }
+  .legend-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.75rem;
+    color: #6B7280;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .legend-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .legend-chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 7px 12px;
+  }
+  .legend-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .legend-chip span {
+    font-size: 0.72rem;
+    color: #9CA3AF;
+    font-weight: 600;
+  }
+  .legend-chip code {
+    font-size: 0.65rem;
+    color: #6B7280;
+    font-family: monospace;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>🥗 <span>Keukenmaat</span></h1>
+  <p>App mockup — kleuren, layout & user flows</p>
+</div>
+
+<div class="screens">
+
+  <!-- ═══════════════════════════ SCREEN 1: DAG ═══════════════════════════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">📅 Dag overzicht</div>
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <!-- Status bar -->
+        <div class="status-bar">
+          <span class="status-time">09:12</span>
+          <div class="status-icons">▲▲▲ ◉ 91%</div>
+        </div>
+
+        <div class="screen-content">
+          <!-- Header -->
+          <div class="dag-header">
+            <div class="dag-header-top">
+              <div>
+                <div class="dag-titel">Vandaag</div>
+                <div class="dag-datum">maandag 27 april</div>
+              </div>
+              <div class="dag-nav">
+                <div class="dag-nav-btn">‹</div>
+                <div class="dag-nav-btn">›</div>
+              </div>
+            </div>
+
+            <!-- Calorie card -->
+            <div class="calorie-card">
+              <div class="calorie-ring">
+                <svg width="58" height="58" viewBox="0 0 58 58">
+                  <circle cx="29" cy="29" r="23" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="5"/>
+                  <circle cx="29" cy="29" r="23" fill="none" stroke="#FFD166" stroke-width="5"
+                    stroke-dasharray="144.5" stroke-dashoffset="40" stroke-linecap="round"/>
+                </svg>
+                <div class="calorie-ring-center">
+                  <div class="calorie-ring-num">1247</div>
+                  <div class="calorie-ring-pct">kcal</div>
+                </div>
+              </div>
+              <div class="calorie-info">
+                <div class="calorie-main">1.247 <span>/ 2.200 kcal</span></div>
+                <div class="macros-row">
+                  <div class="macro-chip">E <span>98g</span></div>
+                  <div class="macro-chip">K <span>142g</span></div>
+                  <div class="macro-chip">V <span>38g</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="slot-section">
+
+            <!-- ONTBIJT — gegeten -->
+            <div class="slot-card slot-item-gegeten">
+              <div class="slot-header" style="background:#FFF8E1">
+                <span class="slot-emoji">🌅</span>
+                <span class="slot-name">Ontbijt</span>
+                <span class="slot-kcal">487 kcal</span>
+              </div>
+              <div class="slot-item-body-gegeten">
+                <div class="check-badge">✓</div>
+                <div class="gegeten-dish">Kwark bowl met granola</div>
+                <div class="gegeten-time">08:34</div>
+              </div>
+            </div>
+
+            <!-- SNACK OCHTEND — gegeten -->
+            <div class="slot-card slot-item-gegeten">
+              <div class="slot-header" style="background:#FFFBF0">
+                <span class="slot-emoji">🍎</span>
+                <span class="slot-name">Snack ochtend</span>
+                <span class="slot-kcal">210 kcal</span>
+              </div>
+              <div class="slot-item-body-gegeten">
+                <div class="check-badge">✓</div>
+                <div class="gegeten-dish">Banaan + amandelen</div>
+                <div class="gegeten-time">10:15</div>
+              </div>
+            </div>
+
+            <!-- LUNCH — gegeten -->
+            <div class="slot-card slot-item-gegeten">
+              <div class="slot-header" style="background:#EBF7F1">
+                <span class="slot-emoji">☀️</span>
+                <span class="slot-name">Lunch</span>
+                <span class="slot-kcal">550 kcal</span>
+              </div>
+              <div class="slot-item-body-gegeten">
+                <div class="check-badge">✓</div>
+                <div class="gegeten-dish">Broodje kipfilet salade</div>
+                <div class="gegeten-time">12:50</div>
+              </div>
+            </div>
+
+            <!-- SNACK MIDDAG — leeg -->
+            <div class="slot-card slot-item-leeg">
+              <div class="slot-header">
+                <span class="slot-emoji">🍊</span>
+                <span class="slot-name">Snack middag</span>
+                <span class="slot-kcal" style="color:#D1D5DB">—</span>
+              </div>
+              <div class="slot-add">
+                <div class="slot-add-icon">+</div>
+                Maaltijd toevoegen
+              </div>
+            </div>
+
+            <!-- AVONDETEN — gepland -->
+            <div class="slot-card slot-item-gepland">
+              <div class="slot-header">
+                <span class="slot-emoji">🌙</span>
+                <span class="slot-name">Avondeten</span>
+                <span class="slot-kcal" style="color:var(--avond)">~425 kcal</span>
+              </div>
+              <div class="slot-item-body-gepland">
+                <div class="gepland-dish">📋 Gegrilde kip · romaatjes-pruimsalade</div>
+                <div class="gepland-sub">Gepland · 4 pers. · 30 min · AH recept</div>
+                <div class="btn-gegeten">✓ Markeer als gegeten</div>
+              </div>
+            </div>
+
+            <!-- SNACK AVOND — leeg -->
+            <div class="slot-card slot-item-leeg">
+              <div class="slot-header">
+                <span class="slot-emoji">🌟</span>
+                <span class="slot-name">Snack avond</span>
+                <span class="slot-kcal" style="color:#D1D5DB">—</span>
+              </div>
+              <div class="slot-add">
+                <div class="slot-add-icon">+</div>
+                Maaltijd toevoegen
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /screen-content -->
+
+        <!-- Tab bar -->
+        <div class="tab-bar">
+          <div class="tab-item"><div class="tab-icon">🏠</div><div class="tab-label">Voorraad</div></div>
+          <div class="tab-item active"><div class="tab-icon">📅</div><div class="tab-label" style="color:var(--groen)">Dag</div></div>
+          <div class="tab-item"><div class="tab-icon">📸</div><div class="tab-label">Scannen</div></div>
+          <div class="tab-item"><div class="tab-icon">⚙️</div><div class="tab-label">Instellingen</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ SCREEN 2: VOORRAAD ═══════════════════════════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">🏠 Voorraad</div>
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="status-bar">
+          <span class="status-time">09:12</span>
+          <div class="status-icons">▲▲▲ ◉ 91%</div>
+        </div>
+
+        <div class="screen-content">
+          <div class="voorraad-header">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <div class="voorraad-titel">Voorraad</div>
+              <div style="font-size:1.2rem;cursor:pointer">🔔</div>
+            </div>
+            <div class="segment-bar">
+              <div class="segment-btn active">🧊 Koelkast</div>
+              <div class="segment-btn">❄️ Vriezer</div>
+              <div class="segment-btn">📦 Kast</div>
+            </div>
+          </div>
+
+          <!-- Alert -->
+          <div class="alert-banner">
+            <div class="alert-icon">⚠️</div>
+            <div class="alert-text">2 producten verlopen bijna</div>
+          </div>
+
+          <!-- Bijna verlopen -->
+          <div class="voorraad-sectie">
+            <div class="sectie-label">⚡ Bijna verlopen</div>
+
+            <div class="voorraad-card crit">
+              <div class="product-emoji">🥛</div>
+              <div class="product-info">
+                <div class="product-name">AH Halfvolle Melk</div>
+                <div class="product-meta">600ml over · 1 pak</div>
+                <div class="product-bar-wrap">
+                  <div class="product-bar crit" style="width:60%"></div>
+                </div>
+              </div>
+              <div class="tht-badge tht-crit">morgen</div>
+            </div>
+
+            <div class="voorraad-card warn">
+              <div class="product-emoji">🧀</div>
+              <div class="product-info">
+                <div class="product-name">AH Jong Belegen</div>
+                <div class="product-meta">180g over · plakken</div>
+                <div class="product-bar-wrap">
+                  <div class="product-bar warn" style="width:45%"></div>
+                </div>
+              </div>
+              <div class="tht-badge tht-warn">3 dagen</div>
+            </div>
+          </div>
+
+          <div class="voorraad-sectie" style="margin-top:10px">
+            <div class="sectie-label">✅ Op voorraad</div>
+
+            <div class="voorraad-card ok">
+              <div class="product-emoji">🥣</div>
+              <div class="product-info">
+                <div class="product-name">AH Kwark 0% vet</div>
+                <div class="product-meta">850g over · 2 bakjes</div>
+                <div class="product-bar-wrap">
+                  <div class="product-bar ok" style="width:85%"></div>
+                </div>
+              </div>
+              <div class="tht-badge tht-ok">15 mei</div>
+            </div>
+
+            <div class="voorraad-card ok">
+              <div class="product-emoji">🍫</div>
+              <div class="product-info">
+                <div class="product-name">AH Granola Chocolade</div>
+                <div class="product-meta">360g over · 1 pak</div>
+                <div class="product-bar-wrap">
+                  <div class="product-bar ok" style="width:72%"></div>
+                </div>
+              </div>
+              <div class="tht-badge tht-ok">aug 2026</div>
+            </div>
+
+            <div class="voorraad-card ok">
+              <div class="product-emoji">🫙</div>
+              <div class="product-info">
+                <div class="product-name">AH Kipfilet naturel</div>
+                <div class="product-meta">300g over · 1 verpakking</div>
+                <div class="product-bar-wrap">
+                  <div class="product-bar ok" style="width:100%"></div>
+                </div>
+              </div>
+              <div class="tht-badge tht-ok">2 mei</div>
+            </div>
+
+            <div class="voorraad-card warn">
+              <div class="product-emoji">🥚</div>
+              <div class="product-info">
+                <div class="product-name">AH Vrije uitloop eieren</div>
+                <div class="product-meta">3 over · 1 doos (10)</div>
+                <div class="product-bar-wrap">
+                  <div class="product-bar warn" style="width:30%"></div>
+                </div>
+              </div>
+              <div class="tht-badge tht-warn">bijna op</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="tab-bar">
+          <div class="tab-item active"><div class="tab-icon">🏠</div><div class="tab-label" style="color:var(--groen)">Voorraad</div></div>
+          <div class="tab-item"><div class="tab-icon">📅</div><div class="tab-label">Dag</div></div>
+          <div class="tab-item"><div class="tab-icon">📸</div><div class="tab-label">Scannen</div></div>
+          <div class="tab-item"><div class="tab-icon">⚙️</div><div class="tab-label">Instellingen</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ SCREEN 3: SCANNEN ═══════════════════════════ -->
+  <div class="screen-wrap">
+    <div class="screen-label">📸 Scannen</div>
+    <div class="phone">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="status-bar">
+          <span class="status-time">09:12</span>
+          <div class="status-icons">▲▲▲ ◉ 91%</div>
+        </div>
+
+        <div class="screen-content">
+          <div class="scannen-header">
+            <div class="scannen-titel">Toevoegen</div>
+            <div class="scannen-sub">Scan, deel of voer handmatig in</div>
+          </div>
+
+          <div class="scan-grid">
+
+            <!-- Primary: AH Bon PDF -->
+            <div class="scan-card scan-card-primary">
+              <span class="scan-icon-big-primary">🧾</span>
+              <div class="scan-text">
+                <div class="scan-card-title">AH Bon (PDF)</div>
+                <div class="scan-card-desc">Deel vanuit de AH app · automatisch naar voorraad</div>
+              </div>
+            </div>
+
+            <div class="scan-card scan-card-meal">
+              <span class="scan-icon-big">📷</span>
+              <div class="scan-card-title">Maaltijd foto</div>
+              <div class="scan-card-desc">Foto → Claude herkent gerecht</div>
+            </div>
+
+            <div class="scan-card scan-card-barcode">
+              <span class="scan-icon-big">📦</span>
+              <div class="scan-card-title">Barcode</div>
+              <div class="scan-card-desc">Scan verpakking → product DB</div>
+            </div>
+
+            <div class="scan-card scan-card-bon">
+              <span class="scan-icon-big">📸</span>
+              <div class="scan-card-title">Bon foto</div>
+              <div class="scan-card-desc">Andere winkels (Lidl, Jumbo)</div>
+            </div>
+
+            <div class="scan-card scan-card-manual">
+              <span class="scan-icon-big">✏️</span>
+              <div class="scan-card-title">Handmatig</div>
+              <div class="scan-card-desc">Invoeren op naam of merk</div>
+            </div>
+
+          </div>
+
+          <!-- Recent -->
+          <div class="recent-header">Recent</div>
+
+          <div class="recent-item">
+            <div class="recent-icon pdf">📄</div>
+            <div class="recent-info">
+              <div class="recent-name">AH Bon · 26 april</div>
+              <div class="recent-sub">14 producten toegevoegd</div>
+            </div>
+            <div class="recent-time">gisteren</div>
+          </div>
+
+          <div class="recent-item">
+            <div class="recent-icon pdf">📋</div>
+            <div class="recent-info">
+              <div class="recent-name">Gegrilde kip recept</div>
+              <div class="recent-sub">PDF recept · gepland vanavond</div>
+            </div>
+            <div class="recent-time">vandaag</div>
+          </div>
+
+          <div class="recent-item">
+            <div class="recent-icon foto">📷</div>
+            <div class="recent-info">
+              <div class="recent-name">Kwark bowl · ontbijt</div>
+              <div class="recent-sub">487 kcal gelogd</div>
+            </div>
+            <div class="recent-time">08:34</div>
+          </div>
+
+        </div>
+
+        <div class="tab-bar">
+          <div class="tab-item"><div class="tab-icon">🏠</div><div class="tab-label">Voorraad</div></div>
+          <div class="tab-item"><div class="tab-icon">📅</div><div class="tab-label">Dag</div></div>
+          <div class="tab-item active"><div class="tab-icon">📸</div><div class="tab-label" style="color:var(--groen)">Scannen</div></div>
+          <div class="tab-item"><div class="tab-icon">⚙️</div><div class="tab-label">Instellingen</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /screens -->
+
+<!-- Color legend -->
+<div class="legend">
+  <div class="legend-title">Kleurpalet</div>
+  <div class="legend-grid">
+    <div class="legend-chip"><div class="legend-dot" style="background:#2D6A4F"></div><span>Primair groen</span><code>#2D6A4F</code></div>
+    <div class="legend-chip"><div class="legend-dot" style="background:#52B788"></div><span>Gegeten / succes</span><code>#52B788</code></div>
+    <div class="legend-chip"><div class="legend-dot" style="background:#F4A261"></div><span>Accent oranje</span><code>#F4A261</code></div>
+    <div class="legend-chip"><div class="legend-dot" style="background:#E76F51"></div><span>Waarschuwing</span><code>#E76F51</code></div>
+    <div class="legend-chip"><div class="legend-dot" style="background:#A8DADC"></div><span>Gepland</span><code>#A8DADC</code></div>
+    <div class="legend-chip"><div class="legend-dot" style="background:#FFD166"></div><span>🌅 Ontbijt</span><code>#FFD166</code></div>
+    <div class="legend-chip"><div class="legend-dot" style="background:#52B788"></div><span>☀️ Lunch</span><code>#52B788</code></div>
+    <div class="legend-chip"><div class="legend-dot" style="background:#457B9D"></div><span>🌙 Avondeten</span><code>#457B9D</code></div>
+    <div class="legend-chip"><div class="legend-dot" style="background:#FAFAF7;border:1px solid #E8E8E3"></div><span>Achtergrond</span><code>#FAFAF7</code></div>
+  </div>
+</div>
+
+</body>
+</html>
