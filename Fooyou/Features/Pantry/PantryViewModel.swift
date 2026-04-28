@@ -9,10 +9,18 @@ final class PantryViewModel: ObservableObject {
     @Published var searchText: String = ""
 
     private let context: NSManagedObjectContext
+    private var cancellables = Set<AnyCancellable>()
 
     init(context: NSManagedObjectContext) {
         self.context = context
         fetch()
+
+        // Auto-refresh whenever anything is saved to the context (e.g. from Scanner tab)
+        NotificationCenter.default
+            .publisher(for: .NSManagedObjectContextDidSave, object: context)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.fetch() }
+            .store(in: &cancellables)
     }
 
     var filteredItems: [PantryItem] {
@@ -55,10 +63,15 @@ final class PantryViewModel: ObservableObject {
     }
 
     func updateQuantity(for item: PantryItem, delta: Double) {
+        let newQty = item.quantity + delta
+        if newQty <= 0 {
+            delete(item)
+            return
+        }
         let request = CDPantryItem.fetchRequest()
         request.predicate = NSPredicate(format: "id == %@", item.id as CVarArg)
         if let cd = try? context.fetch(request).first {
-            cd.quantity = max(0, cd.quantity + delta)
+            cd.quantity = newQty
             save()
             fetch()
         }

@@ -1,20 +1,21 @@
 import SwiftUI
+import CoreData
 
 struct ScannerView: View {
+    @Environment(\.managedObjectContext) private var context
     @State private var showBarcodeScanner = false
-    @State private var scannedBarcode: String? = nil
-    @State private var lookupProduct: Product? = nil
     @State private var isLooking = false
     @State private var lookupError: String? = nil
+    @State private var foundProduct: Product? = nil
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 24) {
                 Spacer()
 
-                // 2×2 grid
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                     ScannerButton(icon: "barcode.viewfinder", label: "Barcode") {
+                        lookupError = nil
                         showBarcodeScanner = true
                     }
                     ScannerButton(icon: "doc.text.viewfinder", label: "Kassabon") {
@@ -55,20 +56,31 @@ struct ScannerView: View {
                 }
                 .ignoresSafeArea()
             }
+            .sheet(item: $foundProduct) { product in
+                AddToVoorraadSheet(product: product, context: context) {
+                    foundProduct = nil
+                }
+            }
         }
     }
 
     private func handleBarcode(_ barcode: String) {
-        scannedBarcode = barcode
+        // Check local CoreData first
+        if let cached = localProduct(for: barcode) {
+            foundProduct = cached
+            return
+        }
+
         isLooking = true
         lookupError = nil
 
         Task {
             do {
-                let product = try await OpenFoodFactsService.shared.product(for: barcode)
-                isLooking = false
-                lookupProduct = product
-                if product == nil {
+                if let product = try await OpenFoodFactsService.shared.product(for: barcode) {
+                    isLooking = false
+                    foundProduct = product
+                } else {
+                    isLooking = false
                     lookupError = "Product niet gevonden voor barcode \(barcode)."
                 }
             } catch {
@@ -76,6 +88,13 @@ struct ScannerView: View {
                 lookupError = "Fout bij opzoeken: \(error.localizedDescription)"
             }
         }
+    }
+
+    private func localProduct(for barcode: String) -> Product? {
+        let request = CDProduct.fetchRequest()
+        request.predicate = NSPredicate(format: "barcode == %@", barcode)
+        request.fetchLimit = 1
+        return (try? context.fetch(request))?.first.flatMap { Product(from: $0) }
     }
 }
 

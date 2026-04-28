@@ -2,7 +2,8 @@ import SwiftUI
 
 struct PantryItemRow: View {
     let item: PantryItem
-    let onConsume: () -> Void
+    let onUse: () -> Void
+    let onDelete: () -> Void
 
     var body: some View {
         HStack(spacing: 12) {
@@ -11,9 +12,11 @@ struct PantryItemRow: View {
                 Text(item.product.name)
                     .font(.fooyouHeadline())
                     .foregroundStyle(Theme.textPrimary)
-                Text(item.product.brand)
-                    .font(.fooyouCaption())
-                    .foregroundStyle(.secondary)
+                if !item.product.brand.isEmpty {
+                    Text(item.product.brand)
+                        .font(.fooyouCaption())
+                        .foregroundStyle(.secondary)
+                }
             }
             Spacer()
             VStack(alignment: .trailing, spacing: 2) {
@@ -29,10 +32,14 @@ struct PantryItemRow: View {
         }
         .padding(.vertical, 8)
         .contentShape(Rectangle())
-        .swipeActions(edge: .trailing) {
-            Button(role: .destructive, action: onConsume) {
-                Label("Gebruik", systemImage: "minus.circle.fill")
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            Button(role: .destructive, action: onDelete) {
+                Label("Verwijder", systemImage: "trash")
             }
+            Button(action: onUse) {
+                Label("Afboeken", systemImage: "minus.circle.fill")
+            }
+            .tint(Theme.primary)
         }
     }
 

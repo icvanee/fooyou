@@ -6,6 +6,17 @@ struct FooyouApp: App {
     let persistenceController = PersistenceController.shared
     @StateObject private var appState = AppState()
 
+    init() {
+        let titleColor = UIColor(Theme.textPrimary)
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        appearance.titleTextAttributes = [.foregroundColor: titleColor]
+        appearance.largeTitleTextAttributes = [.foregroundColor: titleColor]
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()

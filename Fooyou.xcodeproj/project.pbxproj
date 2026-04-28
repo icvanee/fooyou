@@ -20,6 +20,9 @@
 		83CBBA5A1A601CBA00E9B192 /* PantryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC01A601CBA00E9B192 /* PantryView.swift */; };
 		83CBBA5B1A601CBA00E9B192 /* PantryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC11A601CBA00E9B192 /* PantryViewModel.swift */; };
 		83CBBA5C1A601CBA00E9B192 /* PantryItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC21A601CBA00E9B192 /* PantryItemRow.swift */; };
+		83CBBA701A601CBA00E9B192 /* AddToVoorraadSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD01A601CBA00E9B192 /* AddToVoorraadSheet.swift */; };
+		83CBBA711A601CBA00E9B192 /* AddProductSearchSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */; };
+		83CBBA721A601CBA00E9B192 /* AfboekenSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */; };
 		83CBBA5D1A601CBA00E9B192 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC31A601CBA00E9B192 /* ScannerView.swift */; };
 		83CBBA5E1A601CBA00E9B192 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC41A601CBA00E9B192 /* BarcodeScannerView.swift */; };
 		83CBBA5F1A601CBA00E9B192 /* ReceiptScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC51A601CBA00E9B192 /* ReceiptScannerView.swift */; };
@@ -58,6 +61,9 @@
 		83CBBAC01A601CBA00E9B192 /* PantryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryView.swift; sourceTree = "<group>"; };
 		83CBBAC11A601CBA00E9B192 /* PantryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryViewModel.swift; sourceTree = "<group>"; };
 		83CBBAC21A601CBA00E9B192 /* PantryItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryItemRow.swift; sourceTree = "<group>"; };
+		83CBBAD01A601CBA00E9B192 /* AddToVoorraadSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToVoorraadSheet.swift; sourceTree = "<group>"; };
+		83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductSearchSheet.swift; sourceTree = "<group>"; };
+		83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfboekenSheet.swift; sourceTree = "<group>"; };
 		83CBBAC31A601CBA00E9B192 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		83CBBAC41A601CBA00E9B192 /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
 		83CBBAC51A601CBA00E9B192 /* ReceiptScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScannerView.swift; sourceTree = "<group>"; };
@@ -156,6 +162,9 @@
 				83CBBAC01A601CBA00E9B192 /* PantryView.swift */,
 				83CBBAC11A601CBA00E9B192 /* PantryViewModel.swift */,
 				83CBBAC21A601CBA00E9B192 /* PantryItemRow.swift */,
+				83CBBAD01A601CBA00E9B192 /* AddToVoorraadSheet.swift */,
+				83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */,
+				83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */,
 			);
 			path = Pantry;
 			sourceTree = "<group>";
@@ -302,6 +311,9 @@
 				83CBBA5A1A601CBA00E9B192 /* PantryView.swift in Sources */,
 				83CBBA5B1A601CBA00E9B192 /* PantryViewModel.swift in Sources */,
 				83CBBA5C1A601CBA00E9B192 /* PantryItemRow.swift in Sources */,
+				83CBBA701A601CBA00E9B192 /* AddToVoorraadSheet.swift in Sources */,
+				83CBBA711A601CBA00E9B192 /* AddProductSearchSheet.swift in Sources */,
+				83CBBA721A601CBA00E9B192 /* AfboekenSheet.swift in Sources */,
 				83CBBA5D1A601CBA00E9B192 /* ScannerView.swift in Sources */,
 				83CBBA5E1A601CBA00E9B192 /* BarcodeScannerView.swift in Sources */,
 				83CBBA5F1A601CBA00E9B192 /* ReceiptScannerView.swift in Sources */,

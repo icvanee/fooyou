@@ -5,7 +5,13 @@ final class OpenFoodFactsService {
     static let shared = OpenFoodFactsService()
     private init() {}
 
-    private let session = URLSession.shared
+    private let session: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.httpAdditionalHeaders = [
+            "User-Agent": "Fooyou/1.0 (iOS; nl) - github.com/icvanee/fooyou"
+        ]
+        return URLSession(configuration: config)
+    }()
 
     // MARK: - Barcode lookup
 
@@ -26,14 +32,12 @@ final class OpenFoodFactsService {
 
     // MARK: - Name search (Dutch)
 
-    /// Searches Open Food Facts for Dutch products matching the query.
+    /// Searches Open Food Facts for products matching the query (v2 API).
     func search(name: String, maxResults: Int = 20) async throws -> [Product] {
-        var comps = URLComponents(string: "https://world.openfoodfacts.org/cgi/search.pl")!
+        var comps = URLComponents(string: "https://world.openfoodfacts.org/api/v2/search")!
         comps.queryItems = [
             URLQueryItem(name: "search_terms", value: name),
-            URLQueryItem(name: "search_simple", value: "1"),
-            URLQueryItem(name: "action", value: "process"),
-            URLQueryItem(name: "json", value: "1"),
+            URLQueryItem(name: "fields", value: "code,product_name,product_name_nl,brands,quantity,image_front_small_url,nutriments,categories_tags"),
             URLQueryItem(name: "lc", value: "nl"),
             URLQueryItem(name: "page_size", value: "\(maxResults)"),
         ]

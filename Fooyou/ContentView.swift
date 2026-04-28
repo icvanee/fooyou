@@ -31,5 +31,6 @@ struct ContentView: View {
         }
         .tint(Theme.primary)
         .background(Theme.background)
+        .foregroundStyle(Theme.textPrimary)
     }
 }

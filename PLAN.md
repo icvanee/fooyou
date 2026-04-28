@@ -960,15 +960,67 @@ Fooyou.xcodeproj/xcuserdata/
 
 -----
 
+## 👥 Gedeelde Voorraad — Architectuur
+
+### Doel
+Iwan en Roos (twee Apple IDs, één huishouden) werken allebei op dezelfde voorraad. Beiden kunnen producten toevoegen, afboeken en food logs maken.
+
+### Oplossing: CloudKit Sharing (CKShare)
+
+De app gebruikt al `NSPersistentCloudKitContainer`. CloudKit heeft ingebouwde ondersteuning voor het delen van data tussen verschillende Apple IDs via `CKShare` — hetzelfde mechanisme dat Apple gebruikt in Herinneringen en Notities.
+
+**Hoe het werkt:**
+```
+Iwan maakt een gedeelde zone aan → genereert uitnodigingslink
+Roos tikt de link → accepteert → heeft toegang tot dezelfde voorraad
+Beide apparaten schrijven naar dezelfde CloudKit zone
+Conflicten worden automatisch opgelost (last-write-wins per record)
+```
+
+**Implementatie (geen custom backend nodig):**
+```swift
+// 1. Maak een CKShare aan voor de voorraad zone
+let share = CKShare(rootRecord: pantryZoneRecord)
+share[CKShare.SystemFieldKey.title] = “Fooyou Voorraad”
+
+// 2. Toon de Apple share UI
+let controller = UICloudSharingController(share: share, container: CKContainer.default())
+present(controller, animated: true)
+
+// 3. Ontvanger accepteert via universele link → app opent automatisch
+```
+
+**Voordelen:**
+- Geen eigen server, geen extra kosten
+- End-to-end beveiligd via Apple
+- Werkt offline (sync zodra verbinding terug is)
+- Geen wachtwoord of code nodig — Apple ID authenticatie
+
+**Beperkingen:**
+- Werkt alleen tussen iOS-gebruikers met Apple ID
+- Roos moet de uitnodiging accepteren (eenmalig)
+- Conflicten bij gelijktijdig afboeken: CloudKit lost dit op via timestamp
+
+### Alternatief: Supabase backend (indien later nodig)
+
+Als de app ooit breder wordt (meer gebruikers, Android, web):
+- Supabase met Row Level Security
+- Huishoud-code of uitnodigingslink genereren
+- Realtime subscriptions voor live sync
+
+**Conclusie voor nu:** CloudKit Sharing is de juiste keuze — geen extra infra, zit al in de stack.
+
+-----
+
 ## 🧠 Backlog
 
-- **“Wat kan ik koken?”** — Claude suggereert recepten op basis van huidige voorraad
+- **”Wat kan ik koken?”** — Claude suggereert recepten op basis van huidige voorraad
 - **Boodschappenlijst** — automatisch op basis van lage voorraad + geplande maaltijden
 - **Weekoverzicht** — calorie trends + macro gemiddelden als grafiek
 - **Recepten opslaan** — eigen gerechten bewaren voor snelle herlog
 - **Widget** — dag calorieën + volgende geplande maaltijd op homescreen
 - **Coach Leo deep link** — tap op voedingsdata in Coach Leo → open Fooyou dag detail
-- **Gezamenlijk loggen** — Roos en Iwan loggen apart, CloudKit sync houdt voorraad bij
+- **Gedeelde voorraad** — CKShare uitnodiging in Instellingen → Roos krijgt link → zelfde CloudKit zone
 
 -----
 

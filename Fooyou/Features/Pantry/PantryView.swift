@@ -5,6 +5,7 @@ struct PantryView: View {
     @Environment(\.managedObjectContext) private var context
     @StateObject private var vm: PantryViewModel
     @State private var showAddProduct = false
+    @State private var itemToUse: PantryItem? = nil
 
     init() {
         // Initialised with a temporary context; replaced on appear via environment
@@ -39,6 +40,20 @@ struct PantryView: View {
                     .tint(Theme.primary)
                 }
             }
+            .sheet(isPresented: $showAddProduct) {
+                AddProductSearchSheet(context: context) {
+                    showAddProduct = false
+                    vm.fetch()
+                }
+            }
+            .sheet(item: $itemToUse) { item in
+                AfboekenSheet(item: item, context: context) { delta in
+                    if delta > 0 {
+                        vm.updateQuantity(for: item, delta: -delta)
+                    }
+                    itemToUse = nil
+                }
+            }
         }
     }
 
@@ -64,16 +79,13 @@ struct PantryView: View {
     private var itemList: some View {
         List {
             ForEach(vm.filteredItems) { item in
-                PantryItemRow(item: item) {
-                    vm.updateQuantity(for: item, delta: -1)
-                }
+                PantryItemRow(
+                    item: item,
+                    onUse: { itemToUse = item },
+                    onDelete: { vm.delete(item) }
+                )
                 .listRowBackground(Theme.surface)
                 .listRowSeparatorTint(Color.gray.opacity(0.15))
-            }
-            .onDelete { offsets in
-                offsets.forEach { idx in
-                    vm.delete(vm.filteredItems[idx])
-                }
             }
         }
         .listStyle(.plain)
