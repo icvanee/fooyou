@@ -1012,6 +1012,93 @@ Als de app ooit breder wordt (meer gebruikers, Android, web):
 
 -----
 
+## 💾 Backup & Herstel
+
+### Doel
+Fooyou-data beschermen tegen telefoonwissels, iCloud-problemen of per ongeluk verwijderen. Vergelijkbaar met de backup-functionaliteit in Coach Leo.
+
+### Drie niveaus
+
+| Niveau | Mechansime | Zichtbaarheid |
+|---|---|---|
+| **Automatisch — iCloud** | CloudKit sync (al actief) | Onzichtbaar, altijd aan |
+| **Automatisch — lokaal** | Wekelijkse JSON-export naar Files/iCloud Drive | Zichtbaar in bestanden |
+| **Handmatig** | Knop in Instellingen → exporteer nu | Direct downloaden |
+
+### Automatische lokale backup
+
+```
+Elke zondag om 03:00 (background task) of bij app launch als > 7 dagen geleden:
+→ Exporteer alle producten + voorraad + maaltijden als JSON
+→ Sla op in: iCloud Drive / Fooyou Backups / fooyou_backup_2026-04-27.json
+→ Bewaar laatste 4 backups, verwijder oudere
+```
+
+### Herstel flow
+
+```
+Instellingen → Backup & Herstel
+  ├── [iCloud sync status]         Groen vinkje: "Gesynchroniseerd 2 min geleden"
+  ├── Lokale backups               Lijst van beschikbare .json bestanden
+  │     fooyou_backup_2026-04-27   "Gisteren · 847 items"
+  │     fooyou_backup_2026-04-20   "Vorige week · 834 items"
+  │     [Kies backup uit bestanden ...]
+  ├── [Exporteer nu]               Download/deel backup
+  └── [Herstel uit backup...]      Kies bestand → bevestig → importeer
+```
+
+### Backup formaat (JSON)
+
+```json
+{
+  "version": 1,
+  "exportDate": "2026-04-27T10:00:00Z",
+  "appVersion": "1.0",
+  "products": [...],
+  "pantryItems": [...],
+  "plannedMeals": [...]
+}
+```
+
+### Implementatie
+
+```swift
+class BackupService {
+    static let shared = BackupService()
+
+    func export(context: NSManagedObjectContext) throws -> Data {
+        // Fetch alle CDProduct, CDPantryItem, CDPlannedMeal
+        // Serialiseer naar BackupPayload struct
+        // JSONEncoder → Data
+    }
+
+    func importBackup(_ data: Data, into context: NSManagedObjectContext) throws {
+        // Decode BackupPayload
+        // Upsert op basis van UUID (bestaande records bijwerken, niet dupliceren)
+        // context.save()
+    }
+
+    func scheduleWeeklyBackup() {
+        // BGAppRefreshTask of op launch checken
+    }
+
+    private var backupDirectory: URL {
+        // iCloud Drive als beschikbaar, anders lokale Documents
+        FileManager.default.url(forUbiquityContainerIdentifier: nil)?
+            .appendingPathComponent("Documents/Fooyou Backups")
+            ?? FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                .appendingPathComponent("Fooyou Backups")
+    }
+}
+```
+
+### Coach Leo integratie
+- Fooyou-backup bevat geen trainingsdata (dat blijft in HealthKit)
+- Coach Leo importeert voedingsdata uit HealthKit, niet uit Fooyou-backup
+- Backups zijn volledig los van Coach Leo — Fooyou staat op eigen benen
+
+-----
+
 ## 🧠 Backlog
 
 - **”Wat kan ik koken?”** — Claude suggereert recepten op basis van huidige voorraad

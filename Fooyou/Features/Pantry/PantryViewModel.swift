@@ -13,14 +13,82 @@ final class PantryViewModel: ObservableObject {
 
     init(context: NSManagedObjectContext) {
         self.context = context
+        importInbox()
         fetch()
 
-        // Auto-refresh whenever anything is saved to the context (e.g. from Scanner tab)
         NotificationCenter.default
             .publisher(for: .NSManagedObjectContextDidSave, object: context)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.fetch() }
             .store(in: &cancellables)
+    }
+
+    // MARK: - Share Extension inbox
+
+    private struct InboxItem: Codable {
+        var receiptName: String
+        var resolvedName: String?
+        var brand: String
+        var caloriesPer100: Double
+        var quantity: Double
+        var unit: String
+        var location: String
+        var expiryDate: Date?
+    }
+
+    private func importInbox() {
+        guard let dir = FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: "group.nl.fooyou.app") else { return }
+
+        let files = (try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil))?
+            .filter { $0.lastPathComponent.hasPrefix("inbox_") && $0.pathExtension == "json" } ?? []
+
+        guard !files.isEmpty else { return }
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+
+        for file in files {
+            defer { try? FileManager.default.removeItem(at: file) }
+            guard let data = try? Data(contentsOf: file),
+                  let inbox = try? decoder.decode([InboxItem].self, from: data) else { continue }
+
+            for item in inbox {
+                let productReq = NSFetchRequest<NSManagedObject>(entityName: "CDProduct")
+                productReq.predicate = NSPredicate(format: "name CONTAINS[cd] %@", item.receiptName.lowercased())
+                productReq.fetchLimit = 1
+
+                let cdProduct: NSManagedObject
+                if let existing = (try? context.fetch(productReq))?.first {
+                    cdProduct = existing
+                } else {
+                    cdProduct = NSEntityDescription.insertNewObject(forEntityName: "CDProduct", into: context)
+                    cdProduct.setValue(UUID(), forKey: "id")
+                    cdProduct.setValue(item.resolvedName ?? item.receiptName, forKey: "name")
+                    cdProduct.setValue(item.brand, forKey: "brand")
+                    cdProduct.setValue(item.caloriesPer100, forKey: "caloriesPer100")
+                    cdProduct.setValue(0.0, forKey: "proteinPer100")
+                    cdProduct.setValue(0.0, forKey: "fatPer100")
+                    cdProduct.setValue(0.0, forKey: "carbsPer100")
+                    cdProduct.setValue(100.0, forKey: "packSizeGrams")
+                    cdProduct.setValue(item.unit, forKey: "unit")
+                    cdProduct.setValue(Int32(0), forKey: "usageCount")
+                    cdProduct.setValue(100.0, forKey: "lowStockThreshold")
+                    cdProduct.setValue(100.0, forKey: "defaultPortionSize")
+                    cdProduct.setValue("[]", forKey: "ingredientCategories")
+                }
+
+                let cdItem = NSEntityDescription.insertNewObject(forEntityName: "CDPantryItem", into: context)
+                cdItem.setValue(UUID(), forKey: "id")
+                cdItem.setValue(item.quantity, forKey: "quantity")
+                cdItem.setValue(Date(), forKey: "purchasedDate")
+                cdItem.setValue(item.expiryDate, forKey: "expiryDate")
+                cdItem.setValue(item.location, forKey: "location")
+                cdItem.setValue(cdProduct, forKey: "product")
+            }
+        }
+
+        if context.hasChanges { try? context.save() }
     }
 
     var filteredItems: [PantryItem] {

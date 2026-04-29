@@ -1,6 +1,5 @@
 import UIKit
 import SwiftUI
-import CoreData
 import UniformTypeIdentifiers
 import PDFKit
 
@@ -21,13 +20,11 @@ class ShareViewController: UIViewController {
 
         if provider.hasItemConformingToTypeIdentifier(UTType.pdf.identifier) {
             do {
-                // Probeer als URL
                 if let url = try? await provider.loadItem(forTypeIdentifier: UTType.pdf.identifier) as? URL,
                    let pdf = PDFDocument(url: url) {
                     showBonReview(for: pdf)
                     return
                 }
-                // Probeer als Data
                 if let data = try await provider.loadItem(forTypeIdentifier: UTType.pdf.identifier) as? Data,
                    let pdf = PDFDocument(data: data) {
                     showBonReview(for: pdf)
@@ -50,8 +47,7 @@ class ShareViewController: UIViewController {
             return
         }
 
-        let context = makeContext()
-        let reviewView = BonReviewView(items: items, context: context) { [weak self] in
+        let reviewView = BonReviewView(items: items) { [weak self] in
             self?.extensionContext?.completeRequest(returningItems: nil)
         }
 
@@ -80,24 +76,5 @@ class ShareViewController: UIViewController {
             })
             self.present(alert, animated: true)
         }
-    }
-
-    // MARK: - Gedeelde CoreData store via App Group
-
-    private func makeContext() -> NSManagedObjectContext {
-        guard let modelURL = Bundle.main.url(forResource: "Fooyou", withExtension: "momd"),
-              let model = NSManagedObjectModel(contentsOf: modelURL) else {
-            fatalError("Kan CoreData model niet laden in extension")
-        }
-        let container = NSPersistentContainer(name: "Fooyou", managedObjectModel: model)
-        let storeURL = FileManager.default
-            .containerURL(forSecurityApplicationGroupIdentifier: "group.nl.fooyou.app")!
-            .appendingPathComponent("Fooyou.sqlite")
-        let desc = NSPersistentStoreDescription(url: storeURL)
-        container.persistentStoreDescriptions = [desc]
-        container.loadPersistentStores { _, _ in }
-        container.viewContext.automaticallyMergesChangesFromParent = true
-        container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
-        return container.viewContext
     }
 }

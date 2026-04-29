@@ -1,11 +1,22 @@
 import SwiftUI
-import CoreData
+
+// MARK: - Inbox item (written to App Group, imported by main app)
+
+struct InboxItem: Codable {
+    var receiptName: String
+    var resolvedName: String?
+    var brand: String
+    var caloriesPer100: Double
+    var quantity: Double
+    var unit: String
+    var location: String
+    var expiryDate: Date?
+}
 
 // MARK: - Main review view
 
 struct BonReviewView: View {
     @State var items: [BonItem]
-    let context: NSManagedObjectContext
     let onDone: () -> Void
 
     @State private var editingItem: BonItem? = nil
@@ -66,23 +77,13 @@ struct BonReviewView: View {
         }
     }
 
-    // MARK: - OpenFoodFacts + local matching
+    // MARK: - OpenFoodFacts matching
 
     private func enrichItems() async {
         for idx in items.indices {
             guard items[idx].isSelected else { continue }
             items[idx].matchState = .matching
 
-            // 1. Lokale DB — check CDProduct op naam
-            if let local = findLocalProduct(name: items[idx].receiptName) {
-                items[idx].resolvedName   = local.name
-                items[idx].brand          = local.brand
-                items[idx].caloriesPer100 = local.caloriesPer100
-                items[idx].matchState     = .matched
-                continue
-            }
-
-            // 2. OpenFoodFacts
             do {
                 let results = try await searchOpenFoodFacts(query: items[idx].displayName)
                 if let first = results.first {
@@ -97,19 +98,6 @@ struct BonReviewView: View {
                 items[idx].matchState = .notFound
             }
         }
-    }
-
-    private func findLocalProduct(name: String) -> (name: String, brand: String, caloriesPer100: Double)? {
-        let request = NSFetchRequest<NSManagedObject>(entityName: "CDProduct")
-        let keyword = name.lowercased()
-        request.predicate = NSPredicate(format: "name CONTAINS[cd] %@", keyword)
-        request.fetchLimit = 1
-        guard let obj = (try? context.fetch(request))?.first else { return nil }
-        return (
-            name:            obj.value(forKey: "name")          as? String ?? name,
-            brand:           obj.value(forKey: "brand")         as? String ?? "",
-            caloriesPer100:  obj.value(forKey: "caloriesPer100") as? Double ?? 0
-        )
     }
 
     private struct OFFResult {
@@ -147,45 +135,32 @@ struct BonReviewView: View {
         }
     }
 
-    // MARK: - Save to CoreData
+    // MARK: - Write inbox JSON (main app imports on next launch)
 
     private func saveAndDismiss() {
-        for item in items where item.isSelected {
-            // Product ophalen of aanmaken
-            let productReq = NSFetchRequest<NSManagedObject>(entityName: "CDProduct")
-            productReq.predicate = NSPredicate(format: "name CONTAINS[cd] %@", item.receiptName.lowercased())
-            productReq.fetchLimit = 1
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
 
-            let cdProduct: NSManagedObject
-            if let existing = (try? context.fetch(productReq))?.first {
-                cdProduct = existing
-            } else {
-                cdProduct = NSEntityDescription.insertNewObject(forEntityName: "CDProduct", into: context)
-                cdProduct.setValue(UUID(), forKey: "id")
-                cdProduct.setValue(item.finalName, forKey: "name")
-                cdProduct.setValue(item.brand, forKey: "brand")
-                cdProduct.setValue(item.caloriesPer100, forKey: "caloriesPer100")
-                cdProduct.setValue(0.0, forKey: "proteinPer100")
-                cdProduct.setValue(0.0, forKey: "fatPer100")
-                cdProduct.setValue(0.0, forKey: "carbsPer100")
-                cdProduct.setValue(item.unitRaw == "kg" ? 1000.0 : item.quantity, forKey: "packSizeGrams")
-                cdProduct.setValue(item.finalUnit, forKey: "unit")
-                cdProduct.setValue(0, forKey: "usageCount")
-                cdProduct.setValue(100.0, forKey: "lowStockThreshold")
-                cdProduct.setValue(100.0, forKey: "defaultPortionSize")
-                cdProduct.setValue("[]", forKey: "ingredientCategories")
-            }
-
-            let cdItem = NSEntityDescription.insertNewObject(forEntityName: "CDPantryItem", into: context)
-            cdItem.setValue(UUID(), forKey: "id")
-            cdItem.setValue(item.finalQuantity, forKey: "quantity")
-            cdItem.setValue(Date(), forKey: "purchasedDate")
-            cdItem.setValue(item.defaultExpiry, forKey: "expiryDate")
-            cdItem.setValue(item.defaultLocation, forKey: "location")
-            cdItem.setValue(cdProduct, forKey: "product")
+        let inbox = items.filter(\.isSelected).map { item in
+            InboxItem(
+                receiptName: item.receiptName,
+                resolvedName: item.resolvedName,
+                brand: item.brand,
+                caloriesPer100: item.caloriesPer100,
+                quantity: item.finalQuantity,
+                unit: item.finalUnit,
+                location: item.defaultLocation,
+                expiryDate: item.defaultExpiry
+            )
         }
 
-        try? context.save()
+        if let data = try? encoder.encode(inbox),
+           let dir = FileManager.default
+               .containerURL(forSecurityApplicationGroupIdentifier: "group.nl.fooyou.app") {
+            let file = dir.appendingPathComponent("inbox_\(UUID().uuidString).json")
+            try? data.write(to: file)
+        }
+
         onDone()
     }
 }
@@ -198,7 +173,6 @@ struct BonItemRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            // Vinkje
             Button {
                 item.isSelected.toggle()
             } label: {
