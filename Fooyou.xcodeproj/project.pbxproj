@@ -39,6 +39,7 @@
 		83CBBA701A601CBA00E9B192 /* AddToVoorraadSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD01A601CBA00E9B192 /* AddToVoorraadSheet.swift */; };
 		83CBBA711A601CBA00E9B192 /* AddProductSearchSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */; };
 		83CBBA721A601CBA00E9B192 /* AfboekenSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */; };
+		83CBBA731A601CBA00E9B192 /* RefinePantryItemSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD31A601CBA00E9B192 /* RefinePantryItemSheet.swift */; };
 		F371713A2FA12D4C0037E3D3 /* FooyouShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F37171302FA12D4C0037E3D3 /* FooyouShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -102,6 +103,7 @@
 		83CBBAD01A601CBA00E9B192 /* AddToVoorraadSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToVoorraadSheet.swift; sourceTree = "<group>"; };
 		83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductSearchSheet.swift; sourceTree = "<group>"; };
 		83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfboekenSheet.swift; sourceTree = "<group>"; };
+		83CBBAD31A601CBA00E9B192 /* RefinePantryItemSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefinePantryItemSheet.swift; sourceTree = "<group>"; };
 		F37171302FA12D4C0037E3D3 /* FooyouShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FooyouShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -214,6 +216,7 @@
 				83CBBAD01A601CBA00E9B192 /* AddToVoorraadSheet.swift */,
 				83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */,
 				83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */,
+				83CBBAD31A601CBA00E9B192 /* RefinePantryItemSheet.swift */,
 			);
 			path = Pantry;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				83CBBA701A601CBA00E9B192 /* AddToVoorraadSheet.swift in Sources */,
 				83CBBA711A601CBA00E9B192 /* AddProductSearchSheet.swift in Sources */,
 				83CBBA721A601CBA00E9B192 /* AfboekenSheet.swift in Sources */,
+				83CBBA731A601CBA00E9B192 /* RefinePantryItemSheet.swift in Sources */,
 				83CBBA5D1A601CBA00E9B192 /* ScannerView.swift in Sources */,
 				83CBBA5E1A601CBA00E9B192 /* BarcodeScannerView.swift in Sources */,
 				83CBBA5F1A601CBA00E9B192 /* ReceiptScannerView.swift in Sources */,
