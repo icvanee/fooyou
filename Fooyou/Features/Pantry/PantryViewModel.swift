@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import CoreData
 import Combine
 
@@ -20,6 +21,13 @@ final class PantryViewModel: ObservableObject {
             .publisher(for: .NSManagedObjectContextDidSave, object: context)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.fetch() }
+            .store(in: &cancellables)
+
+        // Import inbox whenever the app comes back to the foreground (e.g. after share extension)
+        NotificationCenter.default
+            .publisher(for: UIApplication.willEnterForegroundNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.importInbox(); self?.fetch() }
             .store(in: &cancellables)
     }
 
