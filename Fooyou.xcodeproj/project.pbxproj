@@ -40,7 +40,6 @@
 		83CBBA711A601CBA00E9B192 /* AddProductSearchSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */; };
 		83CBBA721A601CBA00E9B192 /* AfboekenSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */; };
 		F371713A2FA12D4C0037E3D3 /* FooyouShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F37171302FA12D4C0037E3D3 /* FooyouShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		F371713C2FA12D4C0037E3D3 /* Fooyou.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBA001A601CBA00E9B192 /* Fooyou.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -420,7 +419,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F371713C2FA12D4C0037E3D3 /* Fooyou.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
