@@ -48,47 +48,118 @@ final class PantryViewModel: ObservableObject {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
 
+        // Track pantry items created in this batch so same-product lines accumulate
+        var batchItems: [String: CDPantryItem] = [:]
+
         for file in files {
             defer { try? FileManager.default.removeItem(at: file) }
             guard let data = try? Data(contentsOf: file),
                   let inbox = try? decoder.decode([InboxItem].self, from: data) else { continue }
 
             for item in inbox {
-                let productReq = NSFetchRequest<NSManagedObject>(entityName: "CDProduct")
-                productReq.predicate = NSPredicate(format: "name CONTAINS[cd] %@", item.receiptName.lowercased())
+                let key = item.receiptName.lowercased()
+
+                // 1. Find or create CDProduct
+                let productReq = CDProduct.fetchRequest()
+                productReq.predicate = NSPredicate(format: "name CONTAINS[cd] %@", key)
                 productReq.fetchLimit = 1
 
-                let cdProduct: NSManagedObject
+                let cdProduct: CDProduct
                 if let existing = (try? context.fetch(productReq))?.first {
                     cdProduct = existing
+                    if item.caloriesPer100 > 0 && existing.caloriesPer100 == 0 {
+                        existing.caloriesPer100 = item.caloriesPer100
+                    }
+                    if !item.brand.isEmpty && (existing.brand?.isEmpty ?? true) {
+                        existing.brand = item.brand
+                    }
                 } else {
-                    cdProduct = NSEntityDescription.insertNewObject(forEntityName: "CDProduct", into: context)
-                    cdProduct.setValue(UUID(), forKey: "id")
-                    cdProduct.setValue(item.resolvedName ?? item.receiptName, forKey: "name")
-                    cdProduct.setValue(item.brand, forKey: "brand")
-                    cdProduct.setValue(item.caloriesPer100, forKey: "caloriesPer100")
-                    cdProduct.setValue(0.0, forKey: "proteinPer100")
-                    cdProduct.setValue(0.0, forKey: "fatPer100")
-                    cdProduct.setValue(0.0, forKey: "carbsPer100")
-                    cdProduct.setValue(100.0, forKey: "packSizeGrams")
-                    cdProduct.setValue(item.unit, forKey: "unit")
-                    cdProduct.setValue(Int32(0), forKey: "usageCount")
-                    cdProduct.setValue(100.0, forKey: "lowStockThreshold")
-                    cdProduct.setValue(100.0, forKey: "defaultPortionSize")
-                    cdProduct.setValue("[]", forKey: "ingredientCategories")
+                    cdProduct = CDProduct(context: context)
+                    cdProduct.id = UUID()
+                    cdProduct.name = item.resolvedName ?? item.receiptName
+                    cdProduct.brand = item.brand
+                    cdProduct.caloriesPer100 = item.caloriesPer100
+                    cdProduct.proteinPer100 = 0
+                    cdProduct.fatPer100 = 0
+                    cdProduct.carbsPer100 = 0
+                    cdProduct.packSizeGrams = 100
+                    cdProduct.unit = item.unit
+                    cdProduct.usageCount = 0
+                    cdProduct.lowStockThreshold = 100
+                    cdProduct.defaultPortionSize = 100
+                    cdProduct.ingredientCategories = "[]"
                 }
 
-                let cdItem = NSEntityDescription.insertNewObject(forEntityName: "CDPantryItem", into: context)
-                cdItem.setValue(UUID(), forKey: "id")
-                cdItem.setValue(item.quantity, forKey: "quantity")
-                cdItem.setValue(Date(), forKey: "purchasedDate")
-                cdItem.setValue(item.expiryDate, forKey: "expiryDate")
-                cdItem.setValue(item.location, forKey: "location")
-                cdItem.setValue(cdProduct, forKey: "product")
+                // 2. Accumulate into existing pantry item or create new
+                if let existing = batchItems[key] {
+                    existing.quantity += item.quantity
+                } else {
+                    let pantryReq = CDPantryItem.fetchRequest()
+                    pantryReq.predicate = NSPredicate(format: "product.name CONTAINS[cd] %@", key)
+                    pantryReq.fetchLimit = 1
+
+                    if let existingItem = (try? context.fetch(pantryReq))?.first {
+                        existingItem.quantity += item.quantity
+                        batchItems[key] = existingItem
+                    } else {
+                        let cdItem = CDPantryItem(context: context)
+                        cdItem.id = UUID()
+                        cdItem.quantity = item.quantity
+                        cdItem.purchasedDate = Date()
+                        cdItem.expiryDate = item.expiryDate
+                        cdItem.location = item.location
+                        cdItem.product = cdProduct
+                        batchItems[key] = cdItem
+                    }
+                }
             }
         }
 
-        if context.hasChanges { try? context.save() }
+        if context.hasChanges {
+            do { try context.save() } catch { print("importInbox save error: \(error)") }
+        }
+    }
+
+    // MARK: - Verfijn: link pantry item to richer OFacts product data
+
+    func refine(item: PantryItem, with product: Product) {
+        let pantryReq = CDPantryItem.fetchRequest()
+        pantryReq.predicate = NSPredicate(format: "id == %@", item.id as CVarArg)
+        guard let cdItem = (try? context.fetch(pantryReq))?.first,
+              let currentProduct = cdItem.product else { return }
+
+        if let barcode = product.barcode, !barcode.isEmpty {
+            let dupReq = CDProduct.fetchRequest()
+            dupReq.predicate = NSPredicate(format: "barcode == %@ AND self != %@", barcode, currentProduct)
+            dupReq.fetchLimit = 1
+
+            if let existing = (try? context.fetch(dupReq))?.first {
+                // Another CDProduct already has this barcode → merge
+                let existingItemReq = CDPantryItem.fetchRequest()
+                existingItemReq.predicate = NSPredicate(format: "product == %@", existing)
+                existingItemReq.fetchLimit = 1
+
+                if let existingPantryItem = (try? context.fetch(existingItemReq))?.first {
+                    existingPantryItem.quantity += cdItem.quantity
+                    context.delete(cdItem)
+                } else {
+                    cdItem.product = existing
+                }
+                existing.populate(from: product)
+
+                // Remove rough product if now orphaned
+                let orphanReq = CDPantryItem.fetchRequest()
+                orphanReq.predicate = NSPredicate(format: "product == %@", currentProduct)
+                if (try? context.fetch(orphanReq))?.isEmpty ?? true {
+                    context.delete(currentProduct)
+                }
+                save(); fetch(); return
+            }
+        }
+
+        // No barcode conflict — update in-place
+        currentProduct.populate(from: product)
+        save(); fetch()
     }
 
     var filteredItems: [PantryItem] {

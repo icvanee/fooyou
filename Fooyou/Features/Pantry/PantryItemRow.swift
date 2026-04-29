@@ -4,6 +4,7 @@ struct PantryItemRow: View {
     let item: PantryItem
     let onUse: () -> Void
     let onDelete: () -> Void
+    let onRefine: () -> Void
 
     var body: some View {
         HStack(spacing: 12) {
@@ -40,6 +41,12 @@ struct PantryItemRow: View {
                 Label("Afboeken", systemImage: "minus.circle.fill")
             }
             .tint(Theme.primary)
+        }
+        .swipeActions(edge: .leading, allowsFullSwipe: false) {
+            Button(action: onRefine) {
+                Label("Verfijn", systemImage: "wand.and.stars")
+            }
+            .tint(.blue)
         }
     }
 

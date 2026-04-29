@@ -6,6 +6,7 @@ struct PantryView: View {
     @StateObject private var vm: PantryViewModel
     @State private var showAddProduct = false
     @State private var itemToUse: PantryItem? = nil
+    @State private var itemToRefine: PantryItem? = nil
 
     init() {
         // Initialised with a temporary context; replaced on appear via environment
@@ -54,6 +55,14 @@ struct PantryView: View {
                     itemToUse = nil
                 }
             }
+            .sheet(item: $itemToRefine) { item in
+                RefinePantryItemSheet(item: item) { product in
+                    vm.refine(item: item, with: product)
+                    itemToRefine = nil
+                } onCancel: {
+                    itemToRefine = nil
+                }
+            }
         }
     }
 
@@ -82,7 +91,8 @@ struct PantryView: View {
                 PantryItemRow(
                     item: item,
                     onUse: { itemToUse = item },
-                    onDelete: { vm.delete(item) }
+                    onDelete: { vm.delete(item) },
+                    onRefine: { itemToRefine = item }
                 )
                 .listRowBackground(Theme.surface)
                 .listRowSeparatorTint(Color.gray.opacity(0.15))
