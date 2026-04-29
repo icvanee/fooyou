@@ -31,32 +31,39 @@ struct FooyouApp: App {
 final class PersistenceController {
     static let shared = PersistenceController()
 
+    static let appGroupID = "group.nl.fooyou.app"
+
+    /// SQLite in App Group container — toegankelijk voor zowel de app als de Share Extension.
+    static var storeURL: URL {
+        FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: appGroupID)!
+            .appendingPathComponent("Fooyou.sqlite")
+    }
+
     let container: NSPersistentCloudKitContainer
 
     private init() {
         container = NSPersistentCloudKitContainer(name: "Fooyou")
 
-        guard let description = container.persistentStoreDescriptions.first else {
-            fatalError("No persistent store descriptions found.")
-        }
+        let description = NSPersistentStoreDescription(url: Self.storeURL)
         description.cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(
             containerIdentifier: "iCloud.nl.fooyou.app"
         )
         description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
         description.setOption(true as NSNumber,
                               forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+        container.persistentStoreDescriptions = [description]
 
         var loadError: Error?
-        container.loadPersistentStores { _, error in
-            loadError = error
-        }
+        container.loadPersistentStores { _, error in loadError = error }
 
         if loadError != nil {
-            // CloudKit container not yet provisioned — fall back to local store
+            // CloudKit niet geprovisioneerd — lokaal in App Group container
             description.cloudKitContainerOptions = nil
+            container.persistentStoreDescriptions = [description]
             container.loadPersistentStores { _, error in
                 if let error {
-                    fatalError("CoreData failed to load (local fallback): \(error.localizedDescription)")
+                    fatalError("CoreData failed to load: \(error.localizedDescription)")
                 }
             }
         }

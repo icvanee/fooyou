@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,9 +20,6 @@
 		83CBBA5A1A601CBA00E9B192 /* PantryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC01A601CBA00E9B192 /* PantryView.swift */; };
 		83CBBA5B1A601CBA00E9B192 /* PantryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC11A601CBA00E9B192 /* PantryViewModel.swift */; };
 		83CBBA5C1A601CBA00E9B192 /* PantryItemRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC21A601CBA00E9B192 /* PantryItemRow.swift */; };
-		83CBBA701A601CBA00E9B192 /* AddToVoorraadSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD01A601CBA00E9B192 /* AddToVoorraadSheet.swift */; };
-		83CBBA711A601CBA00E9B192 /* AddProductSearchSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */; };
-		83CBBA721A601CBA00E9B192 /* AfboekenSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */; };
 		83CBBA5D1A601CBA00E9B192 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC31A601CBA00E9B192 /* ScannerView.swift */; };
 		83CBBA5E1A601CBA00E9B192 /* BarcodeScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC41A601CBA00E9B192 /* BarcodeScannerView.swift */; };
 		83CBBA5F1A601CBA00E9B192 /* ReceiptScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAC51A601CBA00E9B192 /* ReceiptScannerView.swift */; };
@@ -39,7 +36,36 @@
 		83CBBA6A1A601CBA00E9B192 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83CBBA011A601CBA00E9B192 /* Assets.xcassets */; };
 		83CBBA6B1A601CBA00E9B192 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83CBBA021A601CBA00E9B192 /* Localizable.strings */; };
 		83CBBA6C1A601CBA00E9B192 /* Fooyou.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBA001A601CBA00E9B192 /* Fooyou.xcdatamodeld */; };
+		83CBBA701A601CBA00E9B192 /* AddToVoorraadSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD01A601CBA00E9B192 /* AddToVoorraadSheet.swift */; };
+		83CBBA711A601CBA00E9B192 /* AddProductSearchSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */; };
+		83CBBA721A601CBA00E9B192 /* AfboekenSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */; };
+		F371713A2FA12D4C0037E3D3 /* FooyouShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F37171302FA12D4C0037E3D3 /* FooyouShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F371713C2FA12D4C0037E3D3 /* Fooyou.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83CBBA001A601CBA00E9B192 /* Fooyou.xcdatamodeld */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F37171382FA12D4C0037E3D3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B193 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F371712F2FA12D4C0037E3D3;
+			remoteInfo = FooyouShareExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F371713B2FA12D4C0037E3D3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F371713A2FA12D4C0037E3D3 /* FooyouShareExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		83CBBA001A601CBA00E9B192 /* Fooyou.xcdatamodeld */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Fooyou.xcdatamodeld; sourceTree = "<group>"; };
@@ -61,9 +87,6 @@
 		83CBBAC01A601CBA00E9B192 /* PantryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryView.swift; sourceTree = "<group>"; };
 		83CBBAC11A601CBA00E9B192 /* PantryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryViewModel.swift; sourceTree = "<group>"; };
 		83CBBAC21A601CBA00E9B192 /* PantryItemRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PantryItemRow.swift; sourceTree = "<group>"; };
-		83CBBAD01A601CBA00E9B192 /* AddToVoorraadSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToVoorraadSheet.swift; sourceTree = "<group>"; };
-		83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductSearchSheet.swift; sourceTree = "<group>"; };
-		83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfboekenSheet.swift; sourceTree = "<group>"; };
 		83CBBAC31A601CBA00E9B192 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		83CBBAC41A601CBA00E9B192 /* BarcodeScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerView.swift; sourceTree = "<group>"; };
 		83CBBAC51A601CBA00E9B192 /* ReceiptScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptScannerView.swift; sourceTree = "<group>"; };
@@ -77,10 +100,35 @@
 		83CBBACD1A601CBA00E9B192 /* ClaudeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeService.swift; sourceTree = "<group>"; };
 		83CBBACE1A601CBA00E9B192 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
 		83CBBACF1A601CBA00E9B192 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		83CBBAD01A601CBA00E9B192 /* AddToVoorraadSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToVoorraadSheet.swift; sourceTree = "<group>"; };
+		83CBBAD11A601CBA00E9B192 /* AddProductSearchSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductSearchSheet.swift; sourceTree = "<group>"; };
+		83CBBAD21A601CBA00E9B192 /* AfboekenSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfboekenSheet.swift; sourceTree = "<group>"; };
+		F37171302FA12D4C0037E3D3 /* FooyouShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FooyouShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		F371713E2FA12D4C0037E3D3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = F371712F2FA12D4C0037E3D3 /* FooyouShareExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		F37171312FA12D4C0037E3D3 /* FooyouShareExtension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (F371713E2FA12D4C0037E3D3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = FooyouShareExtension; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		83CBBAA21A601CBA00E9B192 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F371712D2FA12D4C0037E3D3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -110,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				83CBB9F61A601CBA00E9B192 /* Fooyou */,
+				F37171312FA12D4C0037E3D3 /* FooyouShareExtension */,
 				83CBB9F81A601CBA00E9B192 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -118,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				83CBBAA91A601CBA00E9B192 /* Fooyou.app */,
+				F37171302FA12D4C0037E3D3 /* FooyouShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -237,15 +287,39 @@
 				83CBBAA01A601CBA00E9B192 /* Resources */,
 				83CBBAA11A601CBA00E9B192 /* Sources */,
 				83CBBAA21A601CBA00E9B192 /* Frameworks */,
+				F371713B2FA12D4C0037E3D3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F37171392FA12D4C0037E3D3 /* PBXTargetDependency */,
 			);
 			name = Fooyou;
 			productName = Fooyou;
 			productReference = 83CBBAA91A601CBA00E9B192 /* Fooyou.app */;
 			productType = "com.apple.product-type.application";
+		};
+		F371712F2FA12D4C0037E3D3 /* FooyouShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F371713F2FA12D4C0037E3D3 /* Build configuration list for PBXNativeTarget "FooyouShareExtension" */;
+			buildPhases = (
+				F371712C2FA12D4C0037E3D3 /* Sources */,
+				F371712D2FA12D4C0037E3D3 /* Frameworks */,
+				F371712E2FA12D4C0037E3D3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F37171312FA12D4C0037E3D3 /* FooyouShareExtension */,
+			);
+			name = FooyouShareExtension;
+			packageProductDependencies = (
+			);
+			productName = FooyouShareExtension;
+			productReference = F37171302FA12D4C0037E3D3 /* FooyouShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -254,11 +328,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					83CBB9F91A601CBA00E9B192 = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					F371712F2FA12D4C0037E3D3 = {
+						CreatedOnToolsVersion = 26.0;
 					};
 				};
 			};
@@ -277,6 +354,7 @@
 			projectRoot = "";
 			targets = (
 				83CBB9F91A601CBA00E9B192 /* Fooyou */,
+				F371712F2FA12D4C0037E3D3 /* FooyouShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -288,6 +366,13 @@
 			files = (
 				83CBBA6A1A601CBA00E9B192 /* Assets.xcassets in Resources */,
 				83CBBA6B1A601CBA00E9B192 /* Localizable.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F371712E2FA12D4C0037E3D3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -331,7 +416,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F371712C2FA12D4C0037E3D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F371713C2FA12D4C0037E3D3 /* Fooyou.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F37171392FA12D4C0037E3D3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F371712F2FA12D4C0037E3D3 /* FooyouShareExtension */;
+			targetProxy = F37171382FA12D4C0037E3D3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		83CBBAA51A601CBA00E9B192 /* Debug */ = {
@@ -500,6 +601,69 @@
 			};
 			name = Release;
 		};
+		F371713C2FA12D4C0037E3D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y4L26W27HC;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FooyouShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FooyouShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = nl.fooyou.app.FooyouShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F371713D2FA12D4C0037E3D3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Y4L26W27HC;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FooyouShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FooyouShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = nl.fooyou.app.FooyouShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -517,6 +681,15 @@
 			buildConfigurations = (
 				83CBBAA51A601CBA00E9B192 /* Debug */,
 				83CBBAA61A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F371713F2FA12D4C0037E3D3 /* Build configuration list for PBXNativeTarget "FooyouShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F371713C2FA12D4C0037E3D3 /* Debug */,
+				F371713D2FA12D4C0037E3D3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
